@@ -1,10 +1,38 @@
 # Fluid-mobility-prediction-using-logging-measurments-
-In this study, we focused on predicting formation fluid mobility from well logging data, which included neutron porosity, density, resistivity, lithology (geological units), and effective porosity (PHIE). Mobility was initially measured using MDT (Modular Formation Dynamics Tester), but since these measurements are sparse and costly, we aimed to predict them across the wellbore using routinely collected log data.
+# 1. Data Description
 
-For modeling, we employed XGBoost, a boosting algorithm capable of capturing complex, nonlinear relationships between input logs and mobility. The model’s hyperparameters were tuned using the TPE (Tree-structured Parzen Estimator) within a repeated cross-validation framework. This ensured the model’s performance was robust and generalizable, avoiding overfitting to specific wells or depth intervals.
+The study focuses on predicting formation fluid mobility obtained from MDT measurements using routine well logging data. The dataset includes:
 
-Preprocessing included a log transformation of the mobility output. This was necessary because mobility values ranged from 2 to 229, and without log scaling, the model would underfit the small values while being dominated by the largest ones. The resistivity input was right-skewed, so it was also log-transformed to reduce skewness. Notably, extreme resistivity values were retained instead of removed, as they represent the true heterogeneity of the reservoir and are geologically meaningful.
+Neutron porosity – measures hydrogen content in rock, related to porosity.
+Bulk density – gives information on rock matrix density.
+Resistivity – indicates fluid saturation and pore connectivity.
+Lithology / Geological Units – categorical information about the rock type or layer.
+Effective porosity (PHIE) – fraction of interconnected pore space contributing to fluid flow.
 
-Before using XGBoost, a polynomial regression model was tested, but it performed poorly, which was expected given the complex, nonlinear nature of the relationship between logging measurements and mobility.
+Mobility measurements span a wide range (2 to 229), highlighting strong heterogeneity within the reservoir.
 
-Finally, the model’s R² and RMSE were calculated on the log scale, which provides a fair assessment of predictive accuracy across the entire mobility range. Evaluating on the log scale ensures that both small and large mobility values contribute appropriately to the error metrics, giving a more realistic picture of the model’s performance.
+# 2. Preprocessing
+
+Preprocessing was designed to improve model performance and account for data distribution:
+
+Log transformation of output (mobility) – Mobility values were log-transformed to prevent underfitting small values and avoid dominance of high values in model training.
+Input skewness adjustment – Resistivity values were right-skewed and log-transformed to normalize the distribution.
+Outliers – Extreme resistivity values were retained instead of removed, as they represent actual geological heterogeneity.
+Feature selection – Only relevant logging measurements (neutron, density, resistivity, PHIE, and lithology) were used as predictors.
+
+# 3. Modeling Approach
+
+Model selection – XGBoost, a gradient boosting algorithm, was chosen for its ability to model nonlinear and complex relationships between logs and mobility.
+Initial testing – Polynomial regression was tested first but performed poorly due to the nonlinear relationships in the data.
+Hyperparameter tuning – Tuning was performed using Tree-structured Parzen Estimator (TPE) within a repeated cross-validation framework to ensure generalizability across wells and depth intervals.
+
+# 4. Model Performance Evaluation
+
+Metrics – R² and RMSE were calculated on the log-transformed scale, which provides a more realistic measure of prediction accuracy across both small and large mobility values.
+Results – The model effectively captures mobility variations across different lithologies and porosities, reproducing MDT measurements with high fidelity.
+Insights – The predicted mobility profiles highlight reservoir heterogeneity, offering a spatially continuous view of flow properties along the wellbore.
+
+# 5. Key Takeaways
+
+Boosting algorithms can reliably predict MDT-derived mobility using routine logging measurements.
+Preprocessing steps like log-transformations and skewness correction are crucial for wide-ranging mobility data.
