@@ -4,9 +4,13 @@
 The study focuses on predicting formation fluid mobility obtained from MDT measurements using routine well logging data. The dataset includes:
 
 Neutron porosity – measures hydrogen content in rock, related to porosity.
+
 Bulk density – gives information on rock matrix density.
+
 Resistivity – indicates fluid saturation and pore connectivity.
+
 Lithology / Geological Units – categorical information about the rock type or layer.
+
 Effective porosity (PHIE) – fraction of interconnected pore space contributing to fluid flow.
 
 Mobility measurements span a wide range (2 to 229), highlighting strong heterogeneity within the reservoir.
